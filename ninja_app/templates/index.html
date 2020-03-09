@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ninja Gold</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        p {
+            text-align: center;
+        }
+        div {
+            text-align: center;
+        }
+        body {
+            background-image: url("https://wallpaperaccess.com/full/11850.jpg");
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h4 class="text-center">Your Gold: {{ request.session.total_gold }}</h4>
+        <div>
+            <div class="card-group">
+            <form class="card" style="width: 18rem;" action="/process_money" method="POST">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div>
+                        <h4 class="text-default">
+                            <p>Farm</p> 
+                            <p>(Earn 10-20 Gold)</p>
+                        </h4>
+                            <input type="hidden" name="building" value="farm" />
+                            <input type="submit" class="btn btn-success pull-right" value="Find Gold!">
+                    </div>
+                </div>
+            </form>
+            <form class="card" style="width: 18rem;" action="/process_money" method="POST">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div>
+                        <h4 class="text-default">
+                            <p>Cave</p> 
+                            <p>(Earn 5-10 Gold)</p>
+                        </h4>
+                            <input type="hidden" name="building" value="cave" />
+                            <input type="submit" class="btn btn-success " value="Find Gold!">
+                    </div>
+                </div>
+            </form>
+            <form class="card" style="width: 18rem;" action="/process_money" method="POST">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div>
+                        <h4 class="text-default">
+                            <p>House</p> 
+                            <p>(Earn 2-5 Gold)</p>
+                        </h4>
+                            <input type="hidden" name="building" value="house" />
+                            <input type="submit" class="btn btn-success pull-right" value="Find Gold!">
+                    
+                    </div>
+                </div>
+            </form>
+            <form class="card" style="width: 18rem;" action="/process_money" method="POST">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div>
+                        <h4 class="text-default">
+                            <p>Casino</p> 
+                            <p>(Earn 0-50 Gold)</p>
+                        </h4>
+                            <input type="hidden" name="building" value="casino" />
+                            <input type="submit" class="btn btn-success pull right" value="Find Gold!">
+                    </div>
+                </div>
+            </form>
+            </div>  
+            <form  action="/reset" method="POST">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-primary pull-right m-3" value="Play Again">
+        </form>
+        <h3 class="text-white text-center p-3 text-decoration-underline"><u>Activities</u></h3>
+        <div class="row">
+            <div class="col-lg-12" style="height: 400px; overflow: scroll">
+                {% for log in request.session.activities reversed %}
+                    {% if "lost" in log %}
+                        <h4 class="text-danger">{{ log }}</h4>
+                    {% else %}
+                        <h4 class="text-white">{{ log }}</h4>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
